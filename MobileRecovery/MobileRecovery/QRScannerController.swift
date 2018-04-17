@@ -71,7 +71,6 @@ class QRScannerController: UIViewController {
 
     func pairingMethod(_ decodedQR :String){
         var splitString = decodedQR.split(separator: "-")
-        let PoR:Int = Int(splitString[0])!
         let seq_No:UInt = UInt(splitString[1])!
         let username:String = String(splitString[2])
         let computerName:String = String(splitString[3])
@@ -87,7 +86,6 @@ class QRScannerController: UIViewController {
         fetchRequest.fetchLimit = 1
         fetchRequest.includesSubentities = false
 
-
         do{
             let count = try managedContext.count(for: fetchRequest)
             if(count != 0){
@@ -95,32 +93,62 @@ class QRScannerController: UIViewController {
                 let alert = UIAlertController(title: "Device already paired", message: "computer with ID : \(String(describing: computerName)) is already paired", preferredStyle:.alert)
                 let update = UIAlertAction(title: "re-pair", style: .default, handler: {action in
                     //do the keychain and seq_No update here.
-                    print("will update sometime")
-                    //TODO: ask for touchID authenticaino
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Computer")
+                    print("updating ...")
+                    //TODO: ask for touchID authenticaion
+                    let touchMe = BiometricIDAuth()
+                    touchMe.authenticateUser()
+                        {
+                            [weak self] message in
+                            if let message = message {
+                                print("invalid authentication")
+                                let alertView = UIAlertController(title: "Error",
+                                                                  message: message,
+                                                                  preferredStyle: .alert)
+                                let okAction = UIAlertAction(title: "Darn!", style: .default)
+                                alertView.addAction(okAction)
+                                self?.present(alertView, animated: true)
+                            }
+                            else
+                            {
+                                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Computer")
 
-                    fetchRequest.predicate = NSPredicate(format: "computerID = %@",computerName)
+                                fetchRequest.predicate = NSPredicate(format: "computerID = %@",computerName)
 
-                    do {
-                        let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
-                        if results?.count != 0 { // Atleast one was returned
+                                do {
+                                    let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
+                                    if results?.count != 0 { // Atleast one was returned
 
-                            // In my case, I only updated the first item in results
-                            results![0].setValue(computerName, forKey: "computerID")
-                            //also update seq_No and all that nonsense.
+                                        // In my case, I only updated the first item in results
+                                        results![0].setValue(computerName, forKey: "computerID")
+                                        //also update seq_No and all that nonsense.
 
-                        }
-                    } catch {
-                        print("Fetch Failed: \(error)")
+                                    }
+                                } catch {
+                                    print("Fetch Failed: \(error)")
+                                }
+
+                                do {
+                                    try managedContext.save()
+                                    let alert1 = UIAlertController(title: "Pairing Done", message: "Details updated", preferredStyle: .alert)
+                                    let action1 = UIAlertAction(title: "OK", style: .default, handler: {action in
+                                    self?.captureSession.startRunning()
+                                    self?.qrCodeFrameView?.frame = CGRect.zero
+                                    })
+                                    let imgTitle = UIImage(named:"done.png")
+                                    let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+                                    imgViewTitle.image = imgTitle
+                                    alert1.view.addSubview(imgViewTitle)
+                                    alert1.addAction(action1)
+                                    self?.present(alert1, animated: true, completion: nil)
+                                }
+                                catch {
+                                    print("Saving Core Data Failed: \(error)")
+                                }
+                            }
+
                     }
 
-                    do {
-                        try managedContext.save()
-                    }
-                    catch {
-                        print("Saving Core Data Failed: \(error)")
-                    }
-                    })
+                })
                 let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler:  { action in
                     self.captureSession.startRunning()
                     self.qrCodeFrameView?.frame = CGRect.zero
@@ -128,6 +156,7 @@ class QRScannerController: UIViewController {
                 alert.addAction(update)
                 alert.addAction(cancel)
                 present(alert, animated: true, completion: nil )
+
             }
             else{
                 // no matching object

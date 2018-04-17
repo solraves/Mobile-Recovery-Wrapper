@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import LocalAuthentication
 
 class ViewController: UITableViewController {
 
@@ -51,23 +52,39 @@ class ViewController: UITableViewController {
     }
     func deleteAllData(entity: String)
     {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
-        fetchRequest.returnsObjectsAsFaults = false
+        let touchMe = BiometricIDAuth()
+        touchMe.authenticateUser() { [weak self] message in
+        if let message = message {
+            // if the completion is not nil show an alert
+            print("invalid authentication")
+            let alertView = UIAlertController(title: "Error",
+                                              message: message,
+                                              preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Darn!", style: .default)
+            alertView.addAction(okAction)
+            self?.present(alertView, animated: true)
+        } else {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+            fetchRequest.returnsObjectsAsFaults = false
 
-        do
-        {
-            let results = try managedContext.fetch(fetchRequest)
-            for managedObject in results
+            do
             {
-                let managedObjectData:NSManagedObject = managedObject
-                managedContext.delete(managedObjectData)
+                let results = try managedContext.fetch(fetchRequest)
+                for managedObject in results
+                {
+                    let managedObjectData:NSManagedObject = managedObject
+                    managedContext.delete(managedObjectData)
+                }
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
             }
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Detele all data in \(entity) error : \(error) \(error.userInfo)")
-        }
+            self?.tableView.reloadData()
+            }
+    }
+
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,25 +104,43 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        computers.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Computer")
-        fetchRequest.returnsObjectsAsFaults = false
-
-        do
+        let touchMe = BiometricIDAuth() 
+        touchMe.authenticateUser()
         {
-            let results = try managedContext.fetch(fetchRequest)
-            let managedObjectData:NSManagedObject = results[indexPath.row]
-            managedContext.delete(managedObjectData)
+            [weak self] message in
+            if let message = message {
+                print("invalid authentication")
+                let alertView = UIAlertController(title: "Error",
+                                                  message: message,
+                                                  preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Darn!", style: .default)
+                alertView.addAction(okAction)
+                self?.present(alertView, animated: true)
+            }
+            else
+            {
+                self?.computers.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let managedContext = appDelegate.persistentContainer.viewContext
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Computer")
+                fetchRequest.returnsObjectsAsFaults = false
 
-            try managedContext.save()
-              print("Deleted data at row \(indexPath.row) ")
-        } catch let error as NSError {
-            print("Detele all data in Computers error : \(error) \(error.userInfo)")
+                do
+                {
+                    let results = try managedContext.fetch(fetchRequest)
+                    let managedObjectData:NSManagedObject = results[indexPath.row]
+                    managedContext.delete(managedObjectData)
+
+                    try managedContext.save()
+                    print("Deleted data at row \(indexPath.row) ")
+                } catch let error as NSError {
+                    print("Detele all data in Computers error : \(error) \(error.userInfo)")
+                }
+            }
+
         }
+
     }
 
 

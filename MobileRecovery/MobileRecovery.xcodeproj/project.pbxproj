@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BC4D2D672084C760004673ED /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4D2D662084C760004673ED /* QRScannerController.swift */; };
+		BC4D2D6920861FEE004673ED /* TouchIDAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4D2D6820861FEE004673ED /* TouchIDAuthentication.swift */; };
 		BCCCC1EF2081F61200BFB03B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1EE2081F61200BFB03B /* AppDelegate.swift */; };
 		BCCCC1F12081F61200BFB03B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1F02081F61200BFB03B /* ViewController.swift */; };
 		BCCCC1F42081F61200BFB03B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCCCC1F22081F61200BFB03B /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		BC4D2D662084C760004673ED /* QRScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
+		BC4D2D6820861FEE004673ED /* TouchIDAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDAuthentication.swift; sourceTree = "<group>"; };
 		BCCCC1EB2081F61200BFB03B /* MobileRecovery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileRecovery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCCCC1EE2081F61200BFB03B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCCCC1F02081F61200BFB03B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				BCCCC1F52081F61200BFB03B /* MobileRecovery.xcdatamodeld */,
 				BCCCC1F02081F61200BFB03B /* ViewController.swift */,
 				BC4D2D662084C760004673ED /* QRScannerController.swift */,
+				BC4D2D6820861FEE004673ED /* TouchIDAuthentication.swift */,
 			);
 			path = MobileRecovery;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 				BCCCC1F12081F61200BFB03B /* ViewController.swift in Sources */,
 				BC4D2D672084C760004673ED /* QRScannerController.swift in Sources */,
 				BCCCC1F72081F61200BFB03B /* MobileRecovery.xcdatamodeld in Sources */,
+				BC4D2D6920861FEE004673ED /* TouchIDAuthentication.swift in Sources */,
 				BCCCC1EF2081F61200BFB03B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
