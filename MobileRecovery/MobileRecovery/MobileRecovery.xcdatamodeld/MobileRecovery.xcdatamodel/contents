@@ -2,8 +2,9 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Computer" representedClassName="Computer" syncable="YES" codeGenerationType="class">
         <attribute name="computerID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seq_No" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Computer" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="Computer" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>

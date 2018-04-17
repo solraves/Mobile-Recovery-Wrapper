@@ -13,14 +13,15 @@ class ViewController: UITableViewController {
 
     var computers = [NSManagedObject]()
     let cellID = "cellID"
-   // let refreshControl = UIRefreshControl()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl?.addTarget(self, action: Selector(("refresh:")), for: UIControlEvents.valueChanged)
-        tableView.addSubview(refreshControl!) // not required when using UITableViewController
+
+        self.refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "")
+        refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
 
         let newBtn = UIBarButtonItem(title: "clear", style: .plain, target: self, action: #selector(clearData))
         self.navigationItem.leftItemsSupplementBackButton = true
@@ -29,16 +30,16 @@ class ViewController: UITableViewController {
     }
    @objc func refresh(sender:AnyObject) {
         self.tableView.reloadData()
-    refreshControl?.endRefreshing()
+        self.refreshControl?.endRefreshing()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         guard let ad = UIApplication.shared.delegate as? AppDelegate else {return}
-        let contexta = ad.persistentContainer.viewContext
+        let managedContext = ad.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Computer")
         do{
-             computers = try contexta.fetch(fetchRequest)
+             computers = try managedContext.fetch(fetchRequest)
         }catch let err as NSError{
             print("Failed to fetch items",err)
         }
@@ -88,7 +89,7 @@ class ViewController: UITableViewController {
         guard editingStyle == .delete else {return}
         computers.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        //remove also from core data
+
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Computer")
@@ -115,11 +116,5 @@ class ViewController: UITableViewController {
             }
         }
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewControllerB = segue.destination as? QRScannerController {
-            viewControllerB.callback = { message in
-                self.computers = viewControllerB.computers
-            }
-        }
-    }
+
 }
