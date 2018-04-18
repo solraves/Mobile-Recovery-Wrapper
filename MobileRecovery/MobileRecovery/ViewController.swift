@@ -76,6 +76,14 @@ class ViewController: UITableViewController {
                 {
                     let managedObjectData:NSManagedObject = managedObject
                     managedContext.delete(managedObjectData)
+                    let computerName = String(describing : managedObjectData.value(forKey: "computerID"))
+
+                    guard let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "\(String(describing: managedObjectData.value(forKey: "computerID")))-key") else{
+                        print("can't delete keychain data for computerID : \(String(describing: managedObjectData.value(forKey: "computerID")))")
+                    }
+                    guard let removeSuccessful2: Bool = KeychainWrapper.standard.removeObject(forKey: "\(computerName)-key") else{
+                        print("can't delete 2nd time keychain data for computerID : \(computerName)")
+                    }
                 }
                 try managedContext.save()
             } catch let error as NSError {
@@ -104,7 +112,7 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else {return}
-        let touchMe = BiometricIDAuth() 
+        let touchMe = BiometricIDAuth()
         touchMe.authenticateUser()
         {
             [weak self] message in
@@ -134,6 +142,13 @@ class ViewController: UITableViewController {
 
                     try managedContext.save()
                     print("Deleted data at row \(indexPath.row) ")
+                    let computerName = String(describing : managedObjectData.value(forKey: "computerID"))
+
+                    guard let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "\(String(describing: managedObjectData.value(forKey: "computerID")))-key") else{
+                        print("can't delete keychain data for computerID : \(String(describing: managedObjectData.value(forKey: "computerID")))")
+                    }
+                    guard let removeSuccessful2: Bool = KeychainWrapper.standard.removeObject(forKey: "\(computerName)-key") else{
+                        print("can't delete 2nd time keychain data for computerID : \(computerName)")}
                 } catch let error as NSError {
                     print("Detele all data in Computers error : \(error) \(error.userInfo)")
                 }

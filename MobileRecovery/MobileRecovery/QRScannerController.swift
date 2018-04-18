@@ -4,7 +4,7 @@ import CoreData
 
 class QRScannerController: UIViewController {
     var computers = [NSManagedObject]()
-    @IBOutlet var messageLabel:UILabel!
+ //   @IBOutlet var messageLabel:UILabel!
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -57,7 +57,7 @@ class QRScannerController: UIViewController {
         // Start video capture.
         captureSession.startRunning()
         // Move the message label and top bar to the front
-        view.bringSubview(toFront: messageLabel)
+//        view.bringSubview(toFront: messageLabel)
         // Initialize QR Code Frame to highlight the QR code
         qrCodeFrameView = UIView()
         if let qrCodeFrameView = qrCodeFrameView {
@@ -71,11 +71,11 @@ class QRScannerController: UIViewController {
 
     func pairingMethod(_ decodedQR :String){
         var splitString = decodedQR.split(separator: "-")
-        let seq_No:UInt = UInt(splitString[1])!
-        let username:String = String(splitString[2])
-        let computerName:String = String(splitString[3])
-        let KeyToSave:String = String(splitString[4])
-        let algoType:String = String(splitString[5])
+        //let seq_No:UInt = UInt(splitString[0])!
+        let username:String = String(splitString[1])
+        let computerName:String = String(splitString[2])
+        let KeyToSave:String = String(splitString[3])
+        let algoType:String = String(splitString[4])
 
         guard let ad = UIApplication.shared.delegate as? AppDelegate else {return}
         let managedContext = ad.persistentContainer.viewContext
@@ -100,7 +100,7 @@ class QRScannerController: UIViewController {
                         {
                             [weak self] message in
                             if let message = message {
-                                print("invalid authentication")
+                                print("invalid authentication during re-pairing")
                                 let alertView = UIAlertController(title: "Error",
                                                                   message: message,
                                                                   preferredStyle: .alert)
@@ -109,7 +109,7 @@ class QRScannerController: UIViewController {
                                 self?.present(alertView, animated: true)
                             }
                             else
-                            {
+                            {   //modify the core data record
                                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Computer")
 
                                 fetchRequest.predicate = NSPredicate(format: "computerID = %@",computerName)
@@ -121,7 +121,9 @@ class QRScannerController: UIViewController {
                                         // In my case, I only updated the first item in results
                                         results![0].setValue(computerName, forKey: "computerID")
                                         //also update seq_No and all that nonsense.
-
+                                        //remove from keychain and then add new
+                                        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: "\(computerName)-key")
+                                        let saveSuccessful: Bool = KeychainWrapper.standard.set(KeyToSave, forKey: "\(computerName)-key")
                                     }
                                 } catch {
                                     print("Fetch Failed: \(error)")
@@ -135,7 +137,7 @@ class QRScannerController: UIViewController {
                                     self?.qrCodeFrameView?.frame = CGRect.zero
                                     })
                                     let imgTitle = UIImage(named:"done.png")
-                                    let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+                                    let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 20, width: 30, height: 30))
                                     imgViewTitle.image = imgTitle
                                     alert1.view.addSubview(imgViewTitle)
                                     alert1.addAction(action1)
@@ -168,25 +170,23 @@ class QRScannerController: UIViewController {
                 do{
                     computers.append(item)
                     try managedContext.save()
-
-
+                    guard let saveSuccessful: Bool = KeychainWrapper.standard.set(KeyToSave, forKey: "\(computerName)-key")
+                        else{return}
                 }catch let err as NSError{
                     print("Failed to save", err  )
 
                 }
                 //TODO: keychain update, seq_NO update and all that nonsense.
-                //TODO: TouchID authentication
             }
 
         }catch let err as NSError{
             print("Failed to count",err)
         }
         //TODO: Show the response key that needs to be entered on PC to establish trust, with ONLY one phone.
-        //TDOO: Show pairing done also.
         let alert = UIAlertController(title: "Pairing Done", message: "Pairing successful", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         let imgTitle = UIImage(named:"done.png")
-        let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 10, width: 30, height: 30))
+        let imgViewTitle = UIImageView(frame: CGRect(x: 10, y: 20, width: 30, height: 30))
         imgViewTitle.image = imgTitle
         alert.view.addSubview(imgViewTitle)
         alert.addAction(action)
@@ -197,14 +197,13 @@ class QRScannerController: UIViewController {
         self.qrCodeFrameView?.frame = CGRect.zero
     }
     func recoveryMethod(_ decodedQR :String){
-
+ //{ seq_No - username - machineID - publickey/RandomKey - (algorithmType) }
         var splitString = decodedQR.split(separator: "-")
-        let PoR:Int = Int(splitString[0])!
-        let seq_No:UInt = UInt(splitString[1])!
-        let username:String = String(splitString[2])
-        let computerName:String = String(splitString[3])
-        let KeyToSave:String = String(splitString[4])
-        let algoType:String = String(splitString[5])
+        let seq_No:UInt = UInt(splitString[0])!
+        let username:String = String(splitString[1])
+        let computerName:String = String(splitString[2])
+        let KeyToSave:String = String(splitString[3])
+        let algoType:String = String(splitString[4])
 
         guard let ad = UIApplication.shared.delegate as? AppDelegate else {return}
         let managedContext = ad.persistentContainer.viewContext
@@ -214,7 +213,6 @@ class QRScannerController: UIViewController {
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = 1
         fetchRequest.includesSubentities = false
-        var entitiesCount = 0
 
         do{
             let count = try managedContext.count(for: fetchRequest)
@@ -227,39 +225,42 @@ class QRScannerController: UIViewController {
                 })
                 alert.addAction(cancel)
                 present(alert, animated: true, completion: nil )
-            }
-            else{
-
+                }
+                else
+                {
                 // at least one matching object exists
-                //directly show the recovery key after touchID authentication
-//                let alert = UIAlertController(title: "Device found", message: "computer with ID : \(String(describing: computerName)) found in database", preferredStyle:.alert)
-//                let cancel = UIAlertAction(title: "OK", style: .destructive, handler:  { action in
-//                    self.captureSession.startRunning()
-//                    self.qrCodeFrameView?.frame = CGRect.zero
-//                })
-//                alert.addAction(cancel)
-//                present(alert, animated: true, completion: nil )
+                let touchMe = BiometricIDAuth()
+                touchMe.authenticateUser()
+                    {
+                        [weak self] message in
+                        if let message = message {
+                            print("invalid authentication during re-pairing")
+                            let alertView = UIAlertController(title: "Error",
+                                                              message: message,
+                                                              preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Darn!", style: .default)
+                            alertView.addAction(okAction)
+                            self?.present(alertView, animated: true)
+                        }
+                        else{
+                            //show the recovery key as popup
+                            //let retrievedString: String? = KeychainWrapper.standard.string(forKey: "\(computerName)-key")
+                            //                let alert = UIAlertController(title: "Recovery Key", message: "computer with ID : \(String(describing: computerName)) found in database", preferredStyle:.alert)
+                            //                let done = UIAlertAction(title: "Done", style: .destructive, handler:  { action in
+                            //                    self.captureSession.startRunning()
+                            //                    self.qrCodeFrameView?.frame = CGRect.zero
+                            //                })
+                            //                alert.addAction(done)
+                            //                present(alert, animated: true, completion: nil )
 
-            }
+                            //Nothing to update inside mobile app
+                        }
+                    }
+
+                }
         }
         catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
-        }
-
-
-        //if it doesn't exist then add as new
-        let entity = NSEntityDescription.entity(forEntityName: "Computer", in: managedContext)
-        let item = NSManagedObject(entity: entity!, insertInto: managedContext)
-        item.setValue(computerName, forKey: "computerID")
-
-        do{
-            computers.append(item)
-            try managedContext.save()
-
-
-        }catch let err as NSError{
-            print("Failed to save", err  )
-
         }
         captureSession.startRunning()
         self.qrCodeFrameView?.frame = CGRect.zero
@@ -272,18 +273,16 @@ class QRScannerController: UIViewController {
         }
 
         captureSession.stopRunning()
-        //check if QR code is properly structured with 4 dashes { P/R - seq_No - username - machineID - publickey/RandomKey - (algorithmType) }
-        if((decodedQR.components(separatedBy: "-").count-1) > 5 ){
+        //check if QR code is properly structured with 4 dashes { seq_No - username - machineID - publickey/RandomKey - (algorithmType) }
+        if((decodedQR.components(separatedBy: "-").count-1) == 4 ){
             var splitString = decodedQR.split(separator: "-")
-            let PoR:Int = Int(splitString[0])!
-            let seq_No:UInt = UInt(splitString[1])!
-            let username:String = String(splitString[2])
-            let machineID:String = String(splitString[3])
-            let KeyToSave:String = String(splitString[4])
-            let algoType:String = String(splitString[5])
-        //Ask if PoR can be clubbed with seq_No in QR code as - if seq_No is Zero, then by default it will be pairing.
+            let seq_No:UInt = UInt(splitString[0])!
+            //let username:String = String(splitString[1])
+            let machineID:String = String(splitString[2])
+           // let KeyToSave:String = String(splitString[3])
+            //let algoType:String = String(splitString[4])
 
-            if ( PoR == 0){
+            if ( seq_No == 0){
                 let PairingalertController = UIAlertController(title: "Pairing", message: "do you want to add this computer \n\(String(describing: machineID))", preferredStyle:.alert)
                 let save = UIAlertAction(title: "Yes", style:  .default, handler: { action in
                     self.pairingMethod(decodedQR)
@@ -334,7 +333,7 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            messageLabel.text = "No QR code is detected"
+//            messageLabel.text = "No QR code is detected"
             return
         }
         
@@ -347,12 +346,11 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             qrCodeFrameView?.transform = (qrCodeFrameView?.transform.scaledBy(x: 0.001, y: 0.001))!
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: {
-                self.qrCodeFrameView?.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+                self.qrCodeFrameView?.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
             }, completion: nil)
 
             if metadataObj.stringValue != nil {
                 launchApp(decodedQR: metadataObj.stringValue!)
-                messageLabel.text = metadataObj.stringValue
             }
         }
     }

@@ -70,29 +70,9 @@
                     <view key="view" contentMode="scaleToFill" id="BVX-aV-8wF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No QR code is detected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqH-hU-qXN">
-                                <rect key="frame" x="0.0" y="627" width="375" height="40"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="cNd-iI-JQo"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="WqH-hU-qXN" firstAttribute="leading" secondItem="I8I-mu-hjx" secondAttribute="leading" id="2Bx-qm-M90"/>
-                            <constraint firstItem="I8I-mu-hjx" firstAttribute="trailing" secondItem="WqH-hU-qXN" secondAttribute="trailing" id="4EY-7U-AsL"/>
-                            <constraint firstItem="I8I-mu-hjx" firstAttribute="bottom" secondItem="WqH-hU-qXN" secondAttribute="bottom" id="elc-LR-cMS"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="I8I-mu-hjx"/>
                     </view>
-                    <connections>
-                        <outlet property="messageLabel" destination="WqH-hU-qXN" id="8fn-GC-nUa"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdq-ig-sSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
