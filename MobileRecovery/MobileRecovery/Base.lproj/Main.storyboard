@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,11 +35,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="7RS-1I-p8H">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lac-6g-t4s">
-                            <connections>
-                                <segue destination="1y7-zL-pTN" kind="show" identifier="segue1" id="4c3-oW-nAC"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="lac-6g-t4s">
+                                <connections>
+                                    <segue destination="1y7-zL-pTN" kind="show" identifier="segue1" id="4c3-oW-nAC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="BB" id="nEA-yV-e5E">
+                                <connections>
+                                    <segue destination="IHN-cz-miV" kind="show" id="B26-Wm-aQx"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYT-Hh-iEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -66,7 +74,7 @@
         <!--Scanner Controller-->
         <scene sceneID="ygk-n5-cpJ">
             <objects>
-                <viewController id="1y7-zL-pTN" customClass="QRScannerController" customModule="QRCodeReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1y7-zL-pTN" customClass="QRScannerController" customModule="MobileRecovery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BVX-aV-8wF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +84,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdq-ig-sSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2519" y="128"/>
+            <point key="canvasLocation" x="2754" y="-68"/>
+        </scene>
+        <!--Bluetooth Controller-->
+        <scene sceneID="y4z-nc-SAL">
+            <objects>
+                <viewController id="IHN-cz-miV" customClass="BluetoothController" customModule="MobileRecovery" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UAG-Sa-Yan">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCp-4A-Pq3">
+                                <rect key="frame" x="154" y="319" width="67" height="29"/>
+                                <state key="normal" title="Bluetooth"/>
+                                <connections>
+                                    <action selector="bluetoothAction:" destination="IHN-cz-miV" eventType="touchUpInside" id="NZZ-Np-rRq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fCp-4A-Pq3" firstAttribute="centerX" secondItem="UAG-Sa-Yan" secondAttribute="centerX" id="JB0-ch-SWB"/>
+                            <constraint firstItem="fCp-4A-Pq3" firstAttribute="top" secondItem="EIo-We-dgU" secondAttribute="top" constant="255" id="QHF-Je-FTd"/>
+                            <constraint firstItem="fCp-4A-Pq3" firstAttribute="centerY" secondItem="UAG-Sa-Yan" secondAttribute="centerY" id="nh9-xj-OoF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EIo-We-dgU"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uxq-SQ-AyU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2754.4000000000001" y="616.64167916041981"/>
         </scene>
     </scenes>
 </document>

@@ -1,0 +1,28 @@
+{
+  "name": "xaphodObjCUtils",
+  "version": "0.0.10",
+  "summary": "Xaphod's Objective-C utility pod",
+  "description": "Wouldn't it be nice if swift and objc could live in the same Pod and use each other? Welp, they can't. Thanks Pods.",
+  "homepage": "https://github.com/xaphod/xaphodObjCUtils",
+  "license": "MIT",
+  "authors": {
+    "Tim Carr": "xaphod@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/xaphod/xaphodObjCUtils.git",
+    "tag": "0.0.10"
+  },
+  "platforms": {
+    "ios": "8.1"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/*.{m,h}",
+  "libraries": "z",
+  "subspecs": [
+    {
+      "name": "CocoaRunloopSocket",
+      "source_files": "Pod/Classes/CocoaRunloopSocket/*.{m,h}",
+      "requires_arc": true
+    }
+  ]
+}
