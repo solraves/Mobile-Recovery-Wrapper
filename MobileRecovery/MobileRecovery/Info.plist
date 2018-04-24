@@ -45,5 +45,9 @@
 	</array>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Bio-metric authentication is required to access secure data.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth is required for faster pairing.</string>
+	<key>UIRequiresPersistentWiFi</key>
+	<false/>
 </dict>
 </plist>

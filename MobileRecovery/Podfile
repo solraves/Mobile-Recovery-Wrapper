@@ -1,0 +1,13 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+use_frameworks!
+target 'MobileRecovery' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+
+# Pods for MobileRecovery
+pod 'CocoaAsyncSocket', :git => 'https://github.com/robbiehanson/CocoaAsyncSocket.git'
+pod 'HHServices', :git => 'https://github.com/tolo/HHServices.git'
+pod 'xaphodObjCUtils', :git => 'https://github.com/xaphod/xaphodObjCUtils.git'
+ pod 'DataCompression'
+pod 'Bluepeer',:git => 'https://github.com/xaphod/Bluepeer.git'
+end

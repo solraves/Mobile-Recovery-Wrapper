@@ -4,7 +4,6 @@ import CoreData
 
 class QRScannerController: UIViewController {
     var computers = [NSManagedObject]()
- //   @IBOutlet var messageLabel:UILabel!
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -67,8 +66,8 @@ class QRScannerController: UIViewController {
             view.bringSubview(toFront: qrCodeFrameView)
         }
     }
-    // MARK: - Helper methods
 
+    // MARK: - Helper methods
     func pairingMethod(_ decodedQR :String){
         var splitString = decodedQR.split(separator: "-")
         //let seq_No:UInt = UInt(splitString[0])!

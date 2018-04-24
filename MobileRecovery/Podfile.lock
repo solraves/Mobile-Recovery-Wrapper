@@ -1,0 +1,62 @@
+PODS:
+  - Bluepeer (1.3.3):
+    - Bluepeer/Core (= 1.3.3)
+    - Bluepeer/HotPotatoNetwork (= 1.3.3)
+  - Bluepeer/Core (1.3.3):
+    - CocoaAsyncSocket (>= 7.4.0)
+    - DataCompression (>= 2.0.0)
+    - HHServices (>= 2.0)
+    - xaphodObjCUtils (>= 0.0.6)
+  - Bluepeer/HotPotatoNetwork (1.3.3):
+    - Bluepeer/Core
+    - ObjectMapper (~> 3.1)
+  - CocoaAsyncSocket (7.6.3)
+  - DataCompression (2.0.1)
+  - HHServices (2.0.1)
+  - ObjectMapper (3.1.0)
+  - xaphodObjCUtils (0.0.10):
+    - xaphodObjCUtils/CocoaRunloopSocket (= 0.0.10)
+  - xaphodObjCUtils/CocoaRunloopSocket (0.0.10)
+
+DEPENDENCIES:
+  - Bluepeer (from `https://github.com/xaphod/Bluepeer.git`)
+  - CocoaAsyncSocket (from `https://github.com/robbiehanson/CocoaAsyncSocket.git`)
+  - DataCompression
+  - HHServices (from `https://github.com/tolo/HHServices.git`)
+  - xaphodObjCUtils (from `https://github.com/xaphod/xaphodObjCUtils.git`)
+
+EXTERNAL SOURCES:
+  Bluepeer:
+    :git: https://github.com/xaphod/Bluepeer.git
+  CocoaAsyncSocket:
+    :git: https://github.com/robbiehanson/CocoaAsyncSocket.git
+  HHServices:
+    :git: https://github.com/tolo/HHServices.git
+  xaphodObjCUtils:
+    :git: https://github.com/xaphod/xaphodObjCUtils.git
+
+CHECKOUT OPTIONS:
+  Bluepeer:
+    :commit: 9f5c5ce3700060b08af0ef17a83ade5e2fba5426
+    :git: https://github.com/xaphod/Bluepeer.git
+  CocoaAsyncSocket:
+    :commit: ec6c373de9eb7606a229ab927d1cce432073cc26
+    :git: https://github.com/robbiehanson/CocoaAsyncSocket.git
+  HHServices:
+    :commit: 044cccc6e181bb43820d7fa465887cbb616b42cc
+    :git: https://github.com/tolo/HHServices.git
+  xaphodObjCUtils:
+    :commit: 74bdf43f66d5a5395e8843ed215499a71f9fce45
+    :git: https://github.com/xaphod/xaphodObjCUtils.git
+
+SPEC CHECKSUMS:
+  Bluepeer: 9356525bea9dcece2b645ed9ff9639328ffb4a05
+  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  DataCompression: 2ee34bbd53d55c37c529785643b6c208f7c87919
+  HHServices: a9185ef4f77991e95b18c344a6dd4205913ac502
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+  xaphodObjCUtils: f71c54e7918bc6870167c9894642f72dd901a277
+
+PODFILE CHECKSUM: 45168ce60eddad584bd10925caa8087cc731339e
+
+COCOAPODS: 1.4.0

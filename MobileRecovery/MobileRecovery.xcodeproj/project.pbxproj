@@ -17,9 +17,13 @@
 		BCCCC1F72081F61200BFB03B /* MobileRecovery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BCCCC1F52081F61200BFB03B /* MobileRecovery.xcdatamodeld */; };
 		BCCCC1F92081F61200BFB03B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCCCC1F82081F61200BFB03B /* Assets.xcassets */; };
 		BCCCC1FC2081F61300BFB03B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCCCC1FA2081F61300BFB03B /* LaunchScreen.storyboard */; };
+		BCF8AA82208881560043464B /* BluetoothController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF8AA81208881560043464B /* BluetoothController.swift */; };
+		CD1A9BA50D3A1FF9B3E9EBE6 /* Pods_MobileRecovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C22F844929E337C9E476926 /* Pods_MobileRecovery.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C22F844929E337C9E476926 /* Pods_MobileRecovery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobileRecovery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B07369FBED9EB3A79C9CBFCA /* Pods-MobileRecovery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileRecovery.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileRecovery/Pods-MobileRecovery.release.xcconfig"; sourceTree = "<group>"; };
 		BC4D2D662084C760004673ED /* QRScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		BC4D2D6820861FEE004673ED /* TouchIDAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDAuthentication.swift; sourceTree = "<group>"; };
 		BC4D2D6A20874D3E004673ED /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
@@ -32,6 +36,8 @@
 		BCCCC1F82081F61200BFB03B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCCCC1FB2081F61300BFB03B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BCCCC1FD2081F61300BFB03B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BCF8AA81208881560043464B /* BluetoothController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothController.swift; sourceTree = "<group>"; };
+		EEDE845663EAED371A7C4CE2 /* Pods-MobileRecovery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileRecovery.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileRecovery/Pods-MobileRecovery.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +45,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD1A9BA50D3A1FF9B3E9EBE6 /* Pods_MobileRecovery.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5BA6AEFB26C86777F145991F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C22F844929E337C9E476926 /* Pods_MobileRecovery.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BCCCC1E22081F61200BFB03B = {
 			isa = PBXGroup;
 			children = (
 				BCCCC1ED2081F61200BFB03B /* MobileRecovery */,
 				BCCCC1EC2081F61200BFB03B /* Products */,
+				E907A7D398DC8AC30CF39CDA /* Pods */,
+				5BA6AEFB26C86777F145991F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,8 +92,18 @@
 				BC4D2D6820861FEE004673ED /* TouchIDAuthentication.swift */,
 				BC4D2D6A20874D3E004673ED /* KeychainItemAccessibility.swift */,
 				BC4D2D6B20874D3E004673ED /* KeychainWrapper.swift */,
+				BCF8AA81208881560043464B /* BluetoothController.swift */,
 			);
 			path = MobileRecovery;
+			sourceTree = "<group>";
+		};
+		E907A7D398DC8AC30CF39CDA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EEDE845663EAED371A7C4CE2 /* Pods-MobileRecovery.debug.xcconfig */,
+				B07369FBED9EB3A79C9CBFCA /* Pods-MobileRecovery.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +113,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BCCCC2002081F61300BFB03B /* Build configuration list for PBXNativeTarget "MobileRecovery" */;
 			buildPhases = (
+				00526FE1C3226C58BE53A43E /* [CP] Check Pods Manifest.lock */,
 				BCCCC1E72081F61200BFB03B /* Sources */,
 				BCCCC1E82081F61200BFB03B /* Frameworks */,
 				BCCCC1E92081F61200BFB03B /* Resources */,
+				2226A3A3A3417940059CD8AE /* [CP] Embed Pods Frameworks */,
+				4B8A7226F02560C95600A5EA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,6 +176,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		00526FE1C3226C58BE53A43E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MobileRecovery-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2226A3A3A3417940059CD8AE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MobileRecovery/Pods-MobileRecovery-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bluepeer/Bluepeer.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/DataCompression/DataCompression.framework",
+				"${BUILT_PRODUCTS_DIR}/HHServices/HHServices.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/xaphodObjCUtils/xaphodObjCUtils.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bluepeer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataCompression.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HHServices.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/xaphodObjCUtils.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileRecovery/Pods-MobileRecovery-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B8A7226F02560C95600A5EA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileRecovery/Pods-MobileRecovery-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BCCCC1E72081F61200BFB03B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -157,6 +251,7 @@
 				BC4D2D6D20874D3E004673ED /* KeychainWrapper.swift in Sources */,
 				BC4D2D6920861FEE004673ED /* TouchIDAuthentication.swift in Sources */,
 				BCCCC1EF2081F61200BFB03B /* AppDelegate.swift in Sources */,
+				BCF8AA82208881560043464B /* BluetoothController.swift in Sources */,
 				BC4D2D6C20874D3E004673ED /* KeychainItemAccessibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,6 +391,7 @@
 		};
 		BCCCC2012081F61300BFB03B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEDE845663EAED371A7C4CE2 /* Pods-MobileRecovery.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -312,6 +408,7 @@
 		};
 		BCCCC2022081F61300BFB03B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B07369FBED9EB3A79C9CBFCA /* Pods-MobileRecovery.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -9,11 +9,14 @@
 import UIKit
 import CoreData
 import LocalAuthentication
+import Bluepeer
+import xaphodObjCUtils
 
 class ViewController: UITableViewController {
 
     var computers = [NSManagedObject]()
     let cellID = "cellID"
+    let bluepeer = BluepeerObject.init(serviceType: "serviceTypeStr", displayName: "SEEMA", queue: nil, serverPort: XaphodUtils.getFreeTCPPort(), interfaces: BluepeerInterfaces.notWifi, bluetoothBlock: nil)!
 
 
     override func viewDidLoad() {
@@ -26,7 +29,10 @@ class ViewController: UITableViewController {
 
         let newBtn = UIBarButtonItem(title: "clear", style: .plain, target: self, action: #selector(clearData))
         self.navigationItem.leftItemsSupplementBackButton = true
-        self.navigationItem.leftBarButtonItem = newBtn//self.navigationItem.leftBarButtonItems = [newBtn,anotherBtn]
+        //let newBtn2 = UIBarButtonItem(title: "BB", style: .plain, target: self, action: #selector(bluetoothFunction))
+        //self.navigationItem.leftItemsSupplementBackButton = true
+        self.navigationItem.leftBarButtonItem = newBtn
+      //  self.navigationItem.leftBarButtonItems = [newBtn,newBtn2]
 
     }
    @objc func refresh(sender:AnyObject) {
@@ -50,6 +56,7 @@ class ViewController: UITableViewController {
         self.deleteAllData(entity :"Computer")
         self.tableView.reloadData()
     }
+
     func deleteAllData(entity: String)
     {
         let touchMe = BiometricIDAuth()
