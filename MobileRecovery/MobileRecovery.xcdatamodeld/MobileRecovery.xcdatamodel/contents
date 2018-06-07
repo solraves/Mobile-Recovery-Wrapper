@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Computer" representedClassName="Computer" syncable="YES" codeGenerationType="class">
+        <attribute name="computerID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="computer_username" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="computer_username" inverseEntity="User" syncable="YES"/>
+        <fetchedProperty name="username" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Computer"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="computer_username" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Computer" inverseName="computer_username" inverseEntity="Computer" syncable="YES"/>
+        <fetchedProperty name="computerID" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="User"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="Computer" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="User" positionX="-63" positionY="-9" width="128" height="104"/>
+    </elements>
+</model>
